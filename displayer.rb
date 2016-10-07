@@ -10,7 +10,7 @@ module Stories
       puts description
 
       options.values.each_with_index do |option, i|
-        puts((i + 1).to_s + ". " + option)
+        puts "#{i + 1}. #{option}"
       end unless options.empty?
 
       puts("-" * description.length)
@@ -18,50 +18,30 @@ module Stories
   end
 end
 
+require 'json'
 module Stories
   class Game
-    SEGMENTS = {
-      0 => {
-        title: "Amnesia",
-        description: "You don't remember a thing. You're alone in the middle of nowhere. You have a smartphone in your pocket.",
-        options: {
-          1 => "Get smartphone and call agency.",
-          2 => "You start running.",
-          3 => "You yell.",
-        },
-      },
-      1 => {
-        title: "You get your phone",
-        description: "You have 33 missed calls. Your phone is broken in the left upper corner. But it seems to work fine.",
-        options: {
-          0 => "Disregard smarphone.",
-          4 => "See missed calls.",
-        },
-      },
-      4 => {
-        title: "You check your missed calls",
-        description: "Missed calls list reads 21 missed calls from a contact named M. 12 missed calls from a contact named Amanda.",
-        options: {
-          0 => "Disregard smarphone.",
-          5 => "Call M.",
-          6 => "Call Amanda.",
-        },
-      }
-    }
+    SEGMENTS_FILE = "segments.json"
+
+    def initialize
+      load_segments
+    end
 
     def start
       ended = false
-      segment_no = 0
+      segment_ref = :"0"
 
       loop do
-        segment = SEGMENTS[segment_no]
+        segment = @segments[segment_ref]
 
         show_segment(segment)
-        segment_no = read_option(segment)
+        segment_ref = read_option(segment)
 
-        break if segment_no == SEGMENTS.count
+        break if segment_ref == @segments.count
       end
     end
+
+    private
 
     def read_option(segment)
       read_input(segment) || read_option(segment)
@@ -73,6 +53,10 @@ module Stories
       puts "Choose option: "
       input = Integer(gets.chomp)
       segment[:options].to_a[input - 1][0]
+    end
+
+    def load_segments
+      @segments = JSON.parse(File.read(SEGMENTS_FILE), symbolize_names: true)
     end
 
     def show_segment(segment)

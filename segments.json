@@ -1,0 +1,28 @@
+{
+  "0": {
+    "title": "Amnesia",
+    "description": "You don't remember a thing. You're alone in the middle of nowhere. You have a smartphone in your pocket.",
+    "options": {
+      "1": "Get smartphone and call agency.",
+      "2": "You start running.",
+      "3": "You yell."
+    }
+  },
+  "1": {
+    "title": "You get your phone",
+    "description": "You have 33 missed calls. Your phone is broken in the left upper corner. But it seems to work fine.",
+    "options": {
+      "0": "Disregard smarphone.",
+      "4": "See missed calls."
+    }
+  },
+  "4": {
+    "title": "You check your missed calls",
+    "description": "Missed calls list reads 21 missed calls from a contact named M. 12 missed calls from a contact named Amanda.",
+    "options": {
+      "0": "Disregard smarphone.",
+      "5": "Call M.",
+      "6": "Call Amanda."
+    }
+  }
+}
