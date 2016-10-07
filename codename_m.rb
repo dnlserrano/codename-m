@@ -1,3 +1,3 @@
-Dir["./lib/*.rb"].each { |file| require file }
+require_relative "lib/game"
 
 Game.new.start
